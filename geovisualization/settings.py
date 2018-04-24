@@ -31,7 +31,7 @@ SECRET_KEY = ')!%5$m+y!hq==efhe*-*t2hy&nes^nj=n2#$c%-(x$8to-55j4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['0.0.0.0',"https://geovisualization.herokuapp.com"]
 
 
 # Application definition
