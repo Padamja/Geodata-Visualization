@@ -13,7 +13,7 @@ style: 'mapbox://styles/mapbox/streets-v10'
 <head>
     <title>Earthquake Report</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
@@ -34,12 +34,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoicGFkYW1qYSIsImEiOiJjamdjNW45enE4ZjE2MzJtZG1mZ
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v10',
-    zoom: 12,
+    zoom: 1,
     center: [-122.447303, 37.753574]
 });
 
 map.on('load', function () {
-
+    extracted_data = {{map_data | safe}};
     // map.addLayer({
     //     'id': 'population',
     //     'type': 'point',
@@ -55,7 +55,8 @@ map.on('load', function () {
     //         ]
     //     }
     // });
-    map.addSource('population', "{{ map_data}}");
+    console.log(extracted_data);
+    map.addLayer(extracted_data);
 });
 </script>
 

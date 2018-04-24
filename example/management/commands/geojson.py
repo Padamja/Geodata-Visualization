@@ -7,9 +7,16 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):  
 		csv_reader =  csv.reader(open('Earthquakes_7day.csv','r'))
-		geo_data = {
-			"type" : "FeatureCollection",
-			"features" : []
+		geo_data={
+			"id":"points",
+			"type":"symbol",
+			"source":{
+				"type":"geojson",
+				"data":{
+					"type" : "FeatureCollection",
+					"features" : []
+				}
+			}
 		}
 		next(csv_reader)
 		for row in csv_reader:
@@ -18,16 +25,16 @@ class Command(BaseCommand):
 			magnitude  = float(row[6])
 			coordinates = [latitude,longitude]
 			geo_json_feature = {
-				"type" : "Feature",
-				"geometry" : {
+				"type":"Feature",
+				"geometry":{
 					"type":"Point",
-					"coordinates" : coordinates
+					"coordinates":coordinates
 				},
 				"properties":{
-					"magnitude" : magnitude,
-					"region" : row[9]
+					"icon": "monument",
 				}
 			}
-			geo_data['features'].append(geo_json_feature)
-		with open('geo_data.json', 'w') as f:
+			geo_data["source"]["data"]["features"].append(geo_json_feature)
+		with open("geo_data.json", 'w') as f:
 			f.write(json.dumps(geo_data, indent=4))
+
