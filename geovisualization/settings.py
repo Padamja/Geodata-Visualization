@@ -31,7 +31,7 @@ SECRET_KEY = ')!%5$m+y!hq==efhe*-*t2hy&nes^nj=n2#$c%-(x$8to-55j4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'geovisualization.urls'
@@ -83,14 +85,17 @@ WSGI_APPLICATION = 'geovisualization.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'geodata',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': os.getenv('MYSQL_HOST',''),  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default.
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'geodata',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': os.getenv('MYSQL_HOST',''),  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '',  # Set to empty string for default.
+    # }
+    "default": dj_database_url.config(
+          default='sqlite:////{0}'.format(os.path.join(BASE_DIR, 'db.sqlite3'))
+      )
 }
 
 
